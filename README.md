@@ -3,8 +3,6 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 
-
-
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
@@ -21,7 +19,7 @@
   </p>
 </p>
 
-
+<img src="assets/fit_demo.gif" style="height: 500px" />
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
