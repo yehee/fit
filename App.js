@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Animated, View, SafeAreaView, StyleSheet, TextInput, Modal } from 'react-native';
+import { Animated, Text, View, SafeAreaView, StyleSheet, TextInput, Modal } from 'react-native';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -18,7 +18,6 @@ import {
 import { useState as useStore } from '@hookstate/core'
 import store from './store'
 import { HomeScreen, UserScreen, WorkScreen } from './screens';
-import Text from './components/Text'
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -68,7 +67,7 @@ function NewEntryScreen({ navigation }) {
         value={routineTitle}
         placeholder='Add title'
       />
-      {routineTitle.length > 0 && <Text style={{ fontSize: 10, color: '#888' }}>ID: {id(routineTitle)}</Text>}
+      {routineTitle.length > 0 && <Text style={{ fontSize: 10, color: '#888', fontFamily: "Quicksand_500Medium" }}>ID: {id(routineTitle)}</Text>}
       {routine.map(({ title, duration }, index) => (
         <View key={index} style={{
           shadowOffset: { width: 1, height: 1 },
@@ -83,8 +82,8 @@ function NewEntryScreen({ navigation }) {
           borderRadius: 5,
           marginVertical: 8
         }}>
-          <Text>{title}</Text>
-          <Text>
+          <Text style={{ fontFamily: "Quicksand_500Medium" }}>{title}</Text>
+          <Text style={{ fontFamily: "Quicksand_500Medium" }}>
             {`${duration} minutes`}
           </Text>
         </View>
@@ -134,8 +133,8 @@ function ExerciseScreen({ route, navigation }) {
             isPlaying
             duration={duration * 60}
             colors={[
-              ['#FF4500', 0.4],
               ['#FF007F', 0.4],
+              ['#FF4500', 0.4],
               ['#FF003B', 0.2],
             ]}
           >
@@ -144,7 +143,7 @@ function ExerciseScreen({ route, navigation }) {
               const seconds = remainingTime % 60
               return (
                 remainingTime > 0 ?
-                  <Animated.Text style={{ color: animatedColor }}>
+                  <Animated.Text style={{ color: animatedColor, fontFamily: "Quicksand_500Medium" }}>
                     {minutes > 0 && `${minutes} min`} {seconds > 0 && `${seconds} sec`}
                   </Animated.Text> : <Text>Done!</Text>
               )

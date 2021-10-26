@@ -78,8 +78,8 @@ function HomeScreen({ route }) {
             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 30 }}>
                 {progress.data.map((point, index) => (
                     <View key={index}>
-                        <Text style={{ textAlign: 'center', fontSize: 24 }}>{point * progress.goals[index]}</Text>
-                        <Text style={{ textAlign: 'center' }}>{progress.labels[index]}</Text>
+                        <Text style={{ textAlign: 'center', fontSize: 24, fontFamily: "Quicksand_600SemiBold" }}>{point * progress.goals[index]}</Text>
+                        <Text style={{ textAlign: 'center', fontFamily: "Quicksand_500Medium" }}>{progress.labels[index]}</Text>
                     </View>
                 ))}
             </View>
@@ -100,7 +100,7 @@ function HomeScreen({ route }) {
                 <View style={{ margin: 24, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <Text style={{ fontSize: 18, marginTop: 50, marginBottom: 10, fontFamily: "Quicksand_700Bold" }}>You did it!</Text>
                     <LottieView source={require('../assets/seated-dumbbell-bicep-curl.json')} style={{ width: 250 }} autoPlay loop />
-                    <Text>You completed {duration} minute of {title} workout.</Text>
+                    <Text style={{ fontFamily: "Quicksand_500Medium" }}>You completed {duration} minute of {title} workout.</Text>
                     <Button title="Close" type="outline" onPress={() => setVisible(false)} titleStyle={{ fontFamily: "Quicksand_500Medium", color: '#FF007F' }} buttonStyle={{ borderColor: '#FF007F', width: 320 }} style={{ marginTop: 18 }} />
                 </View>
             </Modal>
