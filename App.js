@@ -15,6 +15,8 @@ import {
   Quicksand_600SemiBold,
   Quicksand_700Bold,
 } from '@expo-google-fonts/quicksand';
+import { useState as useStore } from '@hookstate/core'
+import store from './store'
 import { HomeScreen, UserScreen, WorkScreen } from './screens';
 import Text from './components/Text'
 
@@ -25,21 +27,31 @@ const Theme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: 'orangered',
+    primary: '#FF007F',
     background: 'white'
   },
 };
 
-function NewEntryScreen() {
+function NewEntryScreen({ navigation }) {
+  const { routines } = useStore(store)
   const [routineTitle, setRoutineTitle] = useState('')
+  const [routineDuration, setRoutineDuration] = useState(0)
   const [title, setTitle] = useState('')
   const [duration, setDuration] = useState('')
   const [info, setInfo] = useState('')
   const [visible, setVisible] = useState(false)
-  const [exercise, setExercise] = useState([])
+  const [routine, setRoutine] = useState([])
 
+  const id = (value) => {
+    return value.trim().toLowerCase().replace(/[\W]+/g, '-')
+  }
+  const addRoutine = () => {
+    routines.merge({ [id(routineTitle)]: { id: id(routineTitle), title: routineTitle, duration: routineDuration, routine } })
+    navigation.navigate('Work')
+  }
   const addExercise = () => {
-    setExercise([...exercise, { title, duration, info }])
+    setRoutineDuration(routineDuration + Number(duration))
+    setRoutine([...routine, { title, duration, info }])
     setTitle('')
     setDuration('')
     setInfo('')
@@ -56,8 +68,9 @@ function NewEntryScreen() {
         value={routineTitle}
         placeholder='Add title'
       />
-      {exercise.map(({ title, duration }) => (
-        <View style={{
+      {routineTitle.length > 0 && <Text style={{ fontSize: 10, color: '#888' }}>ID: {id(routineTitle)}</Text>}
+      {routine.map(({ title, duration }, index) => (
+        <View key={index} style={{
           shadowOffset: { width: 1, height: 1 },
           shadowOpacity: 0.15, shadowRadius: 2,
           backgroundColor: 'white',
@@ -80,9 +93,9 @@ function NewEntryScreen() {
       <Button
         title="+ Add a new exercise"
         onPress={() => setVisible(true)}
-        titleStyle={{ marginVertical: 5, fontSize: 16, color: "orangered", fontFamily: "Quicksand_500Medium" }}
+        titleStyle={{ marginVertical: 5, fontSize: 16, color: "#FF007F", fontFamily: "Quicksand_500Medium" }}
         type="clear" />
-      <Button title="Add" titleStyle={{ fontFamily: "Quicksand_500Medium" }} buttonStyle={{ backgroundColor: "orangered" }} style={{ marginTop: 18 }} />
+      <Button title="Add" titleStyle={{ fontFamily: "Quicksand_500Medium" }} buttonStyle={{ backgroundColor: "#FF007F" }} style={{ marginTop: 18 }} onPress={addRoutine} />
       <Modal
         animationType="slide"
         presentationStyle="formSheet"
@@ -97,12 +110,12 @@ function NewEntryScreen() {
             placeholder='Add title'
             placeholderTextColor="#bbb"
           />
-          <TextInput style={styles.input} keyboardType="numeric" placeholder="Add duration" onChangeText={setDuration} placeholderTextColor="#bbb"
+          <TextInput style={styles.input} keyboardType="numeric" placeholder="Add duration in minutes" onChangeText={setDuration} placeholderTextColor="#bbb"
             value={duration} />
           <TextInput style={styles.input} placeholder="Enter additional information" multiline onChangeText={setInfo}
             value={info} />
-          <Button title="Add" titleStyle={{ fontFamily: "Quicksand_500Medium" }} buttonStyle={{ backgroundColor: "orangered" }} style={{ marginTop: 18 }} onPress={addExercise} />
-          <Button title="Close" type="outline" onPress={() => setVisible(false)} titleStyle={{ fontFamily: "Quicksand_500Medium", color: 'orangered' }} buttonStyle={{ borderColor: 'orangered' }} style={{ marginTop: 18 }} />
+          <Button title="Add" titleStyle={{ fontFamily: "Quicksand_500Medium" }} buttonStyle={{ backgroundColor: "#FF007F" }} style={{ marginTop: 18 }} onPress={addExercise} />
+          <Button title="Close" type="outline" onPress={() => setVisible(false)} titleStyle={{ fontFamily: "Quicksand_500Medium", color: '#FF007F' }} buttonStyle={{ borderColor: '#FF007F' }} style={{ marginTop: 18 }} />
         </View>
       </Modal>
     </SafeAreaView>
@@ -119,7 +132,7 @@ function ExerciseScreen({ route, navigation }) {
           <Text style={{ textAlign: 'center', fontSize: 18, marginBottom: 30, fontFamily: "Quicksand_600SemiBold", width: 180 }}>{title}</Text>
           <CountdownCircleTimer
             isPlaying
-            duration={duration}
+            duration={duration * 60}
             colors={[
               ['#FF4500', 0.4],
               ['#FF007F', 0.4],
@@ -149,7 +162,7 @@ function ExerciseScreen({ route, navigation }) {
           icon={{
             name: "angle-left",
             size: 30,
-            color: "orangered",
+            color: "#FF007F",
             type: "font-awesome"
           }}
           onPress={() => setIndex(index - 1)} disabled={index === 0} />
@@ -159,7 +172,7 @@ function ExerciseScreen({ route, navigation }) {
           icon={{
             name: "angle-right",
             size: 30,
-            color: "orangered",
+            color: "#FF007F",
             type: "font-awesome"
           }}
           onPress={() => setIndex(index + 1)}
@@ -169,7 +182,7 @@ function ExerciseScreen({ route, navigation }) {
         <Button
           title="All done!"
           type="clear"
-          titleStyle={{ color: "orangered", fontFamily: "Quicksand_600SemiBold" }}
+          titleStyle={{ color: "#FF007F", fontFamily: "Quicksand_600SemiBold" }}
           onPress={() => navigation.navigate('Home', { title, duration })} />
       )}
     </View>

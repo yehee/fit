@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, Image, Platform } from 'react-native';
+import { Text, View, Image, Platform } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import Text from '../components/Text'
 
 const user = {
     name: 'Alice',
-    email: 'alice@yawl.io',
+    email: 'alice@gmail.com',
 }
 
 function UserScreen() {
@@ -39,7 +38,7 @@ function UserScreen() {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Image source={{ uri: image ?? 'https://images.unsplash.com/photo-1594269807769-c07238cb51b2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80' }} style={{ width: 100, height: 100, borderRadius: 100 }} />
-            <Text onPress={pickImage} style={{ color: 'orangered', marginVertical: 10 }}>Change profile</Text>
+            <Text onPress={pickImage} style={{ color: '#FF007F', marginVertical: 10 }}>Change profile</Text>
             <Text>{user.name}</Text>
             <Text>{user.email}</Text>
         </View>
