@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Animated, Text, View, Dimensions, Modal, LayoutAnimation } from 'react-native';
+import { Animated, View, Dimensions, Modal, LayoutAnimation } from 'react-native';
 import { ProgressChart, ContributionGraph } from 'react-native-chart-kit';
-import { Button } from 'react-native-elements'
 import LottieView from 'lottie-react-native'
+import { OutlineButton, Text } from '../components'
 
 const screenWidth = Dimensions.get("window").width - 48;
 
@@ -57,9 +57,11 @@ function HomeScreen({ route }) {
     }, [])
     useEffect(() => setVisible(Boolean(title)), [title])
 
+    const today = () => new Date().toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" })
+
     return (
         <View style={{ padding: 24 }}>
-            <Text style={{ fontFamily: "Quicksand_700Bold" }}>{new Date().toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" })}</Text>
+            <Text style={{ fontFamily: "Quicksand_700Bold" }}>{today()}</Text>
             <Text style={{ fontSize: 24, marginTop: 5, fontFamily: "Quicksand_700Bold" }}>Hello Alice 👋</Text>
             <Text style={{ fontSize: 16, marginTop: 10, fontFamily: "Quicksand_600SemiBold" }}>Today's report</Text>
             <ProgressChart
@@ -79,7 +81,7 @@ function HomeScreen({ route }) {
                 {progress.data.map((point, index) => (
                     <View key={index}>
                         <Text style={{ textAlign: 'center', fontSize: 24, fontFamily: "Quicksand_600SemiBold" }}>{point * progress.goals[index]}</Text>
-                        <Text style={{ textAlign: 'center', fontFamily: "Quicksand_500Medium" }}>{progress.labels[index]}</Text>
+                        <Text style={{ textAlign: 'center' }}>{progress.labels[index]}</Text>
                     </View>
                 ))}
             </View>
@@ -100,8 +102,8 @@ function HomeScreen({ route }) {
                 <View style={{ margin: 24, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <Text style={{ fontSize: 18, marginTop: 50, marginBottom: 10, fontFamily: "Quicksand_700Bold" }}>You did it!</Text>
                     <LottieView source={require('../assets/seated-dumbbell-bicep-curl.json')} style={{ width: 250 }} autoPlay loop />
-                    <Text style={{ fontFamily: "Quicksand_500Medium" }}>You completed {duration} minute of {title} workout.</Text>
-                    <Button title="Close" type="outline" onPress={() => setVisible(false)} titleStyle={{ fontFamily: "Quicksand_500Medium", color: '#FF007F' }} buttonStyle={{ borderColor: '#FF007F', width: 320 }} style={{ marginTop: 18 }} />
+                    <Text>You completed {duration} minute of {title} workout.</Text>
+                    <OutlineButton title="Close" onPress={() => setVisible(false)} />
                 </View>
             </Modal>
         </View>

@@ -4863,6 +4863,11 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
+react-native-bubble-select@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/react-native-bubble-select/-/react-native-bubble-select-0.6.0.tgz#801507df205a4b3199dcee24b4d0f8aed595618c"
+  integrity sha512-Yc6Etpl6qtjKDi32OyTjCmktt0PvKIyKClSdzWBcM6b/Wn7hhJrfLt/0acBHQ5JIc853psjY8elhh/kcMWJ3mQ==
+
 react-native-chart-kit@^6.11.0:
   version "6.11.0"
   resolved "https://registry.yarnpkg.com/react-native-chart-kit/-/react-native-chart-kit-6.11.0.tgz#513e0944cd8f946e1827facc17fe766ae487d91b"

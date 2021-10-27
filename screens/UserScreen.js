@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, Image, Platform } from 'react-native';
+import { View, Image, Platform } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import { useState as useStore } from '@hookstate/core'
+import { Text } from '../components'
+import { primary } from '../style'
+import store from '../store'
 
-const user = {
-    name: 'Alice',
-    email: 'alice@gmail.com',
-}
+const placeholder = 'https://images.unsplash.com/photo-1594269807769-c07238cb51b2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'
 
 function UserScreen() {
     const [image, setImage] = useState(null);
+    const { user } = useStore(store)
     useEffect(() => {
         (async () => {
             if (Platform.OS !== 'web') {
@@ -28,8 +30,6 @@ function UserScreen() {
             quality: 1,
         });
 
-        console.log(result);
-
         if (!result.cancelled) {
             setImage(result.uri);
         }
@@ -37,10 +37,10 @@ function UserScreen() {
 
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Image source={{ uri: image ?? 'https://images.unsplash.com/photo-1594269807769-c07238cb51b2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80' }} style={{ width: 100, height: 100, borderRadius: 100 }} />
-            <Text onPress={pickImage} style={{ color: '#FF007F', marginVertical: 10 }}>Change profile</Text>
-            <Text>{user.name}</Text>
-            <Text>{user.email}</Text>
+            <Image source={{ uri: image ?? placeholder }} style={{ width: 100, height: 100, borderRadius: 100 }} />
+            <Text onPress={pickImage} style={{ color: primary, marginVertical: 10 }}>Change profile</Text>
+            <Text>{user.get().name}</Text>
+            <Text>{user.get().email}</Text>
         </View>
     );
 }
